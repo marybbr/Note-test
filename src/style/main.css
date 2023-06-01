@@ -1,0 +1,17 @@
+body {
+  background: rgb(209, 208, 217);
+  background: linear-gradient(
+    90deg,
+    rgba(209, 208, 217, 1) 0%,
+    rgba(62, 63, 64, 0.6) 100%
+  );
+}
+
+.glassy-bg {
+  background: rgba(0, 0, 0, 0.19);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}

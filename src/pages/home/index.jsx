@@ -2,16 +2,31 @@ import { useMemo, useState, useContext } from "react";
 import ReactSelect from "react-select";
 import { Link } from "react-router-dom";
 import { TagContext } from "../../App";
-import { Button, Col, Form, Row, Stack } from "react-bootstrap";
+import { Button, Col, Form, Row, Stack, Pagination } from "react-bootstrap";
 import { EditTagsModal } from "./EditTagsModal";
 import { NoteCard } from "./NoteCard";
 
-export function NoteList() {
+export function NoteList({ activeTab, setActiveTab, allNotes }) {
   const { tags: availableTags, notesWithTags: notes } = useContext(TagContext);
 
   const [selectedTags, setSelectedTags] = useState([]);
   const [title, setTitle] = useState("");
   const [modalTags, setModalTags] = useState(false);
+  let items = [];
+  let numberItems = 1;
+
+  for (let number = 1; number <= allNotes.length; number += 10) {
+    items.push(
+      <Pagination.Item
+        onClick={(e) => setActiveTab(Number(e.target.innerText))}
+        key={number}
+        active={number === activeTab}
+      >
+        {numberItems}
+      </Pagination.Item>
+    );
+    numberItems += 1;
+  }
 
   const filteredNotes = useMemo(() => {
     return notes.filter((note) => {
@@ -97,6 +112,9 @@ export function NoteList() {
             />
           </Col>
         ))}
+      </Row>
+      <Row className="mt-2 fixed">
+        <Pagination>{items}</Pagination>
       </Row>
       <EditTagsModal
         availableTags={availableTags}

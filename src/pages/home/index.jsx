@@ -7,7 +7,7 @@ import { EditTagsModal } from "./EditTagsModal";
 import { NoteCard } from "./NoteCard";
 
 export function NoteList() {
-  const [availableTags, notes] = useContext(TagContext);
+  const { tags: availableTags, notesWithTags: notes } = useContext(TagContext);
 
   const [selectedTags, setSelectedTags] = useState([]);
   const [title, setTitle] = useState("");

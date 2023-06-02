@@ -4,7 +4,7 @@ import { Delete } from "@icon-park/react";
 import { TagContext } from "../../App";
 
 export function EditTagsModal({ availableTags, show, onHide }) {
-  const [, , updateTag, onDeleteTag] = useContext(TagContext);
+  const { updateTag, onDeleteTag } = useContext(TagContext);
 
   return (
     <Modal

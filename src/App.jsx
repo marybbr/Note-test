@@ -81,7 +81,7 @@ function App() {
           path="/"
           element={
             <TagContext.Provider
-              value={[tags, notesWithTags, updateTag, onDeleteTag]}
+              value={{ tags, notesWithTags, updateTag, onDeleteTag }}
             >
               <NoteList
                 notes={notesWithTags}

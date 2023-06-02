@@ -15,12 +15,12 @@ export function NoteList({ activeTab, setActiveTab, allNotes }) {
   let items = [];
   let numberItems = 1;
 
-  for (let number = 1; number <= allNotes.length; number += 10) {
+  for (let number = 1; number <= allNotes.length; number += 5) {
     items.push(
       <Pagination.Item
         onClick={(e) => setActiveTab(Number(e.target.innerText))}
         key={number}
-        active={number === activeTab}
+        active={numberItems === activeTab}
       >
         {numberItems}
       </Pagination.Item>

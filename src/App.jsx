@@ -22,7 +22,7 @@ function App() {
   const [activeTab, setActiveTab] = useState(1);
 
   function splitArray(arr, n) {
-    const chunkSize = 10;
+    const chunkSize = 5;
     const startIndex = (n - 1) * chunkSize;
     return [...arr].splice(startIndex, chunkSize);
   }

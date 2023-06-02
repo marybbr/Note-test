@@ -7,6 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocalStorage } from "./useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import "./style/main.css";
+import { NoteLayout } from "./NoteLayout";
+import { Preview } from "./pages/preview";
 
 function App() {
   const [notes, setNotes] = useLocalStorage("NOTES", []);
@@ -51,9 +53,9 @@ function App() {
             />
           }
         />
-        <Route path="/edit" element={<h1>Edit</h1>} />
-        <Route path="/:id">
-          <Route index element={<h1>id page</h1>} />
+        <Route path="/:id" element={<NoteLayout notes={notes} />}>
+          <Route index element={<Preview availableTags={tags} />} />
+          <Route path="edit" element={<h1>Edit</h1>} />
         </Route>
         <Route path="*" element={<Navigate to="/new" />} />
       </Routes>

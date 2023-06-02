@@ -1,5 +1,6 @@
 import { Card, Stack, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import styles from "./NoteCard.module.css";
 
 export function NoteCard(note) {
   const { id, tags, color, title } = note;
@@ -8,7 +9,7 @@ export function NoteCard(note) {
       as={Link}
       to={`${id}`}
       style={{ backgroundColor: color, border: color }}
-      className="h-100 text-reset text-decoration-none"
+      className={`h-100 text-reset text-decoration-none ${styles.card}`}
     >
       <Card.Body>
         <Stack
@@ -24,7 +25,9 @@ export function NoteCard(note) {
             >
               {note.tags.map((tag) => (
                 <p className="h6" key={tag.id}>
-                  <Badge>{tag.label}</Badge>
+                  <Badge bg="light" text="dark">
+                    {tag.label}
+                  </Badge>
                 </p>
               ))}
             </Stack>

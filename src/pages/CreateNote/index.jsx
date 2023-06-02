@@ -44,6 +44,8 @@ export function NoteForm({
             <Form.Group controlId="tags">
               <Form.Label as="h4">Tags</Form.Label>
               <CreatableReactSelect
+                menuPortalTarget={document.body}
+                styles={{ menuPortal: (base) => ({ ...base, zIndex: 10 }) }}
                 onCreateOption={(label) => {
                   const newTag = { id: uuidV4(), label };
                   onAddTag(newTag);

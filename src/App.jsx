@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, createContext } from "react";
 import { v4 as uuidV4 } from "uuid";
 import { Container } from "react-bootstrap";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -10,6 +10,8 @@ import { EditNote } from "./pages/edit";
 import { NoteLayout } from "./NoteLayout";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style/main.css";
+
+export const TagContext = createContext(null);
 
 function App() {
   const [notes, setNotes] = useLocalStorage("NOTES", []);
@@ -78,12 +80,16 @@ function App() {
         <Route
           path="/"
           element={
-            <NoteList
-              notes={notesWithTags}
-              availableTags={tags}
-              updateTag={updateTag}
-              onDeleteTag={onDeleteTag}
-            />
+            <TagContext.Provider
+              value={[tags, notesWithTags, updateTag, onDeleteTag]}
+            >
+              <NoteList
+                notes={notesWithTags}
+                availableTags={tags}
+                updateTag={updateTag}
+                onDeleteTag={onDeleteTag}
+              />
+            </TagContext.Provider>
           }
         />
         <Route

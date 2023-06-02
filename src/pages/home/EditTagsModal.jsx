@@ -1,13 +1,11 @@
 import { Form, Modal, Row, Stack, Col } from "react-bootstrap";
+import { useContext } from "react";
 import { Delete } from "@icon-park/react";
+import { TagContext } from "../../App";
 
-export function EditTagsModal({
-  availableTags,
-  show,
-  onHide,
-  updateTag,
-  onDeleteTag,
-}) {
+export function EditTagsModal({ availableTags, show, onHide }) {
+  const [, , updateTag, onDeleteTag] = useContext(TagContext);
+
   return (
     <Modal
       show={show}

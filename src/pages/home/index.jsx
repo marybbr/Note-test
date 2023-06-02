@@ -1,11 +1,14 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useContext } from "react";
 import ReactSelect from "react-select";
 import { Link } from "react-router-dom";
+import { TagContext } from "../../App";
 import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { EditTagsModal } from "./EditTagsModal";
 import { NoteCard } from "./NoteCard";
 
-export function NoteList({ availableTags, notes, onDeleteTag, updateTag }) {
+export function NoteList() {
+  const [availableTags, notes] = useContext(TagContext);
+
   const [selectedTags, setSelectedTags] = useState([]);
   const [title, setTitle] = useState("");
   const [modalTags, setModalTags] = useState(false);
@@ -98,8 +101,6 @@ export function NoteList({ availableTags, notes, onDeleteTag, updateTag }) {
       <EditTagsModal
         availableTags={availableTags}
         show={modalTags}
-        onDeleteTag={onDeleteTag}
-        updateTag={updateTag}
         onHide={() => setModalTags(false)}
       />
     </>

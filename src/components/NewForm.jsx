@@ -12,11 +12,12 @@ export function NoteForm({
   title = "",
   markdown = "",
   tags = [],
+  defaultColor,
 }) {
   const titleRef = useRef();
   const markdownRef = useRef();
   const [selectedTags, setSelectedTags] = useState(tags);
-  const [color, setSelectedColor] = useState("");
+  const [color, setSelectedColor] = useState(defaultColor);
   const navigate = useNavigate();
 
   function handleSubmit(e) {

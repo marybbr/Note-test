@@ -15,3 +15,11 @@ body {
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
+
+.modal-bg {
+  background-color: rgb(169, 201, 210);
+}
+
+.pointer {
+  cursor: pointer;
+}

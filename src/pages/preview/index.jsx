@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useNote } from "../../NoteLayout";
 import ReactMarkdown from "react-markdown";
 import { Row, Col, Stack, Button, Badge } from "react-bootstrap";
 
-export function Preview({ availableTags }) {
+export function Preview({ availableTags, onDeleteNote }) {
   const note = useNote();
+  const navigate = useNavigate();
   const noteTags = availableTags.filter((tag) => note.tagIds.includes(tag.id));
 
   return (
@@ -15,19 +16,30 @@ export function Preview({ availableTags }) {
         </Col>
         <Col>
           <Stack gap={2} direction="horizontal" className="justify-content-end">
-            <Link to={`/${note.id}/edit`}>
-              <Button size="lg" variant="dark">
-                Edit
-              </Button>
-            </Link>
-            <Button size="lg" variant="danger">
+            <Button
+              onClick={() => navigate(`/${note.id}/edit`)}
+              size="lg"
+              variant="dark"
+            >
+              Edit
+            </Button>
+            <Button
+              onClick={() => {
+                onDeleteNote(note.id);
+                navigate("/");
+              }}
+              size="lg"
+              variant="danger"
+            >
               Delete
             </Button>
-            <Link to="/">
-              <Button size="lg" variant="outline-dark">
-                Back
-              </Button>
-            </Link>
+            <Button
+              onClick={() => navigate("/")}
+              size="lg"
+              variant="outline-dark"
+            >
+              Back
+            </Button>
           </Stack>
         </Col>
       </Row>

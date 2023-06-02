@@ -1,14 +1,15 @@
 import { useMemo } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { Container } from "react-bootstrap";
-import { NoteForm } from "./pages/CreateNote";
-import { NoteList } from "./pages/home";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useLocalStorage } from "./useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
-import "./style/main.css";
-import { NoteLayout } from "./NoteLayout";
+import { Container } from "react-bootstrap";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useLocalStorage } from "./useLocalStorage";
 import { Preview } from "./pages/preview";
+import { NoteList } from "./pages/home";
+import { CreateNote } from "./pages/create";
+import { EditNote } from "./pages/edit";
+import { NoteLayout } from "./NoteLayout";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style/main.css";
 
 function App() {
   const [notes, setNotes] = useLocalStorage("NOTES", []);
@@ -18,12 +19,47 @@ function App() {
     setTags((prve) => [...prve, tag]);
   }
 
+  function updateTag(id, label) {
+    setTags((prvTag) => {
+      return prvTag.map((tag) => {
+        if (tag.id === id) return { ...tag, label };
+        return tag;
+      });
+    });
+  }
+  function onDeleteTag(id) {
+    setTags((prevTags) => {
+      return prevTags.filter((tag) => tag.id !== id);
+    });
+  }
+
   function onCreateNote({ tags, ...data }) {
     setNotes((prevNote) => {
       return [
         ...prevNote,
         { ...data, id: uuidV4(), tagIds: tags.map((tag) => tag.id) },
       ];
+    });
+  }
+
+  function onUpdateNote(id, { tags, ...data }) {
+    setNotes((prvNotes) => {
+      return prvNotes.map((note) => {
+        if (note.id === id) {
+          return { ...note, ...data, tagIds: tags.map((tag) => tag.id) };
+        } else {
+          return note;
+        }
+      });
+    });
+  }
+
+  function onDeleteNote(id) {
+    // const newNote = notes.filter((note) => note.id !== id);
+    // setNotes(newNote)
+
+    setNotes((prevNotes) => {
+      return prevNotes.filter((note) => note.id !== id);
     });
   }
 
@@ -41,12 +77,19 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<NoteList notes={notesWithTags} availableTags={tags} />}
+          element={
+            <NoteList
+              notes={notesWithTags}
+              availableTags={tags}
+              updateTag={updateTag}
+              onDeleteTag={onDeleteTag}
+            />
+          }
         />
         <Route
           path="/new"
           element={
-            <NoteForm
+            <CreateNote
               onSubmit={onCreateNote}
               onAddTag={addTag}
               availableTags={tags}
@@ -54,8 +97,22 @@ function App() {
           }
         />
         <Route path="/:id" element={<NoteLayout notes={notes} />}>
-          <Route index element={<Preview availableTags={tags} />} />
-          <Route path="edit" element={<h1>Edit</h1>} />
+          <Route
+            index
+            element={
+              <Preview availableTags={tags} onDeleteNote={onDeleteNote} />
+            }
+          />
+          <Route
+            path="edit"
+            element={
+              <EditNote
+                onUpdateNote={onUpdateNote}
+                onAddTag={addTag}
+                availableTags={tags}
+              />
+            }
+          />
         </Route>
         <Route path="*" element={<Navigate to="/new" />} />
       </Routes>
